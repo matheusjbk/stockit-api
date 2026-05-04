@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="src/StockIt.API/StockIt.API.csproj" />
+  <Project Path="src/StockIt.Application/StockIt.Application.csproj" />
+  <Project Path="src/StockIt.Domain/StockIt.Domain.csproj" />
+  <Project Path="src/StockIt.Infra/StockIt.Infra.csproj" />
+</Solution>
