@@ -1,10 +1,19 @@
 using Scalar.AspNetCore;
+using StockIt.Infra.Data;
+using StockIt.Infra.Data.TablesConfigurations;
+using StockIt.Infra.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
+
+builder.Services.AddInfra(builder.Configuration);
+
+//builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<AppDbContext>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -22,5 +31,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapIdentityApi<ApplicationUser>();
 
 app.Run();
