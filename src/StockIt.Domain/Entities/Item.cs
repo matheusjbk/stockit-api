@@ -9,7 +9,5 @@ public class Item : EntityBase
     public decimal MinimumQuantity { get; set; }
     public ItemMeasureUnit Unit { get; set; }
     public Guid CategoryId { get; set; }
-    public Category Category { get; set; } = default!;
     public Guid UserId { get; set; }
-    public User User { get; set; } = default!;
 }
