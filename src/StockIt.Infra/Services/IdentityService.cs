@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using StockIt.Domain.Entities;
 using StockIt.Domain.Services;
 using StockIt.Infra.Data.TablesConfigurations;
 
@@ -13,12 +14,13 @@ public class IdentityService : IAuthService
         _userManager = userManager;
     }
 
-    public async Task<bool> CreateUserAsync(string name, string email, string password)
+    public async Task<bool> CreateUserAsync(User user, string password)
     {
         var result = await _userManager.CreateAsync(new ApplicationUser
         {
-            UserName = name,
-            Email = email,
+            Id = user.Id,
+            UserName = user.Name,
+            Email = user.Email,
         }, password);
 
         return result.Succeeded;
