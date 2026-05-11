@@ -30,8 +30,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         var result = await _authService.CreateUserAsync(user, request.Password);
 
-        //TODO: refactor to return identity error messages
-        if (!result) return Result<RegisteredUserResponse>.Failure(new InternalServerError());
+        if (!result.IsSuccess) return Result<RegisteredUserResponse>.Failure(result.Error!);
 
         var registeredUserResponse = user.ToRegisteredUserResponse();
 
