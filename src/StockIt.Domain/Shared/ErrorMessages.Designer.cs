@@ -106,6 +106,42 @@ namespace StockIt.Domain.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A senha precisa de um caracter especial (ex.: !, @, #).
+        /// </summary>
+        public static string NON_ALPHA_PASSWORD {
+            get {
+                return ResourceManager.GetString("NON_ALPHA_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha precisa de ao menos um número.
+        /// </summary>
+        public static string NON_DIGIT_PASSWORD {
+            get {
+                return ResourceManager.GetString("NON_DIGIT_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha precisa de ao menos uma letra minúscula.
+        /// </summary>
+        public static string NON_LOWER_PASSWORD {
+            get {
+                return ResourceManager.GetString("NON_LOWER_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A senha precisa de ao menos uma letra maiúscula.
+        /// </summary>
+        public static string NON_UPPER_PASSWORD {
+            get {
+                return ResourceManager.GetString("NON_UPPER_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Informe um nome com no mínimo 2 caracteres.
         /// </summary>
         public static string SHORT_NAME {

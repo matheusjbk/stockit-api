@@ -1,8 +1,9 @@
 ﻿using StockIt.Domain.Entities;
+using StockIt.Domain.Shared;
 
 namespace StockIt.Domain.Services;
 
 public interface IAuthService
 {
-    public Task<bool> CreateUserAsync(User user, string password);
+    public Task<Result> CreateUserAsync(User user, string password);
 }

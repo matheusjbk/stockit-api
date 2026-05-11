@@ -132,6 +132,18 @@
   <data name="INVALID_EMAIL" xml:space="preserve">
     <value>Informe um endereço de e-mail válido</value>
   </data>
+  <data name="NON_ALPHA_PASSWORD" xml:space="preserve">
+    <value>A senha precisa de um caracter especial (ex.: !, @, #)</value>
+  </data>
+  <data name="NON_DIGIT_PASSWORD" xml:space="preserve">
+    <value>A senha precisa de ao menos um número</value>
+  </data>
+  <data name="NON_LOWER_PASSWORD" xml:space="preserve">
+    <value>A senha precisa de ao menos uma letra minúscula</value>
+  </data>
+  <data name="NON_UPPER_PASSWORD" xml:space="preserve">
+    <value>A senha precisa de ao menos uma letra maiúscula</value>
+  </data>
   <data name="SHORT_NAME" xml:space="preserve">
     <value>Informe um nome com no mínimo 2 caracteres</value>
   </data>
