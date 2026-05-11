@@ -13,7 +13,7 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
 
         entity.Property(user => user.Id).IsRequired().ValueGeneratedNever();
 
-        entity.Property(user => user.UserName).IsRequired();
+        entity.Property(user => user.Name).HasMaxLength(200).IsRequired();
 
         entity.Property(user => user.Email).HasMaxLength(150).IsRequired().HasColumnType("varchar(150)");
 
