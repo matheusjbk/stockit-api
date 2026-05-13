@@ -33,6 +33,16 @@ public class IdentityService : IAuthService
         return Result.Failure(new AggregateError(errors));
     }
 
+    public async Task<Result> LoginAsync(string email, string password)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+
+        if (user is null || await _userManager.CheckPasswordAsync(user, password))
+            return Result.Failure(new UnauthorizedError(ErrorMessages.INVALID_LOGIN));
+
+        return Result.Success();
+    }
+
     private static IEnumerable<IError> MapIdentityError(IEnumerable<IdentityError> errors)
     {
         foreach(var error in errors)

@@ -2,10 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StockIt.Domain.Repositories;
+using StockIt.Domain.Security.Tokens;
 using StockIt.Domain.Services;
 using StockIt.Infra.Data;
 using StockIt.Infra.Data.Repositories;
 using StockIt.Infra.Data.TablesConfigurations;
+using StockIt.Infra.Security.Tokens;
 using StockIt.Infra.Services;
 
 namespace StockIt.Infra.DependencyInjection;
@@ -18,6 +20,7 @@ public static class InfraRegistrations
         AddIdentity(services);
         AddAuthService(services);
         AddRepositories(services);
+        AddTokens(services, configuration);
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -40,5 +43,13 @@ public static class InfraRegistrations
     private static void AddRepositories(IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+    }
+
+    private static void AddTokens(IServiceCollection services, IConfiguration configuration)
+    {
+        var expirationTime = configuration.GetValue<uint>("Settings:Jwt:ExpirationTimeInMinutes");
+        var secretKey = configuration.GetValue<string>("Settings:Jwt:SecretKey")!;
+
+        services.AddScoped<IAccessTokenGenerator>(provider => new JwtGenerator(expirationTime, secretKey));
     }
 }
