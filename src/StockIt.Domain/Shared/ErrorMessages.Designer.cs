@@ -106,6 +106,15 @@ namespace StockIt.Domain.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to E-mail e/ou senha inválidos.
+        /// </summary>
+        public static string INVALID_LOGIN {
+            get {
+                return ResourceManager.GetString("INVALID_LOGIN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A senha precisa de um caracter especial (ex.: !, @, #).
         /// </summary>
         public static string NON_ALPHA_PASSWORD {
@@ -138,6 +147,15 @@ namespace StockIt.Domain.Shared {
         public static string NON_UPPER_PASSWORD {
             get {
                 return ResourceManager.GetString("NON_UPPER_PASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocorreu um erro ao processar sua requisição.
+        /// </summary>
+        public static string PROBLEM_DETAILS_TITLE {
+            get {
+                return ResourceManager.GetString("PROBLEM_DETAILS_TITLE", resourceCulture);
             }
         }
         
