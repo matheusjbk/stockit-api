@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StockIt.Domain.Shared;
 using StockIt.Domain.Shared.Errors;
 
@@ -30,23 +29,21 @@ public class StockItBaseController : ControllerBase
         return HandleError(result.Error!);
     }
 
-    private ObjectResult HandleError(IError error)
+    private static ObjectResult HandleError(IError error)
     {
-        IEnumerable<string> errorMessages;
-        if (error is AggregateError aggregateError)
-        {
-            errorMessages = aggregateError.SubErrors.SelectMany(e => e.Messages);
+        var errorMessages = error is AggregateError aggregateError
+            ? aggregateError.SubErrors.SelectMany(e => e.Messages)
+            : error.Messages;
 
-        }
-        else
-        {
-            errorMessages = error.Messages;
-        }
-
-        return StatusCode(error.StatusCode, new
+        var problemDetails = new ProblemDetails
         {
             Status = error.StatusCode,
-            Detail = errorMessages
-        });
+            Detail = string.Join(" | ", errorMessages),
+            Title = ErrorMessages.PROBLEM_DETAILS_TITLE
+        };
+
+        return new ObjectResult(problemDetails){
+            StatusCode = error.StatusCode,
+        };
     }
 }

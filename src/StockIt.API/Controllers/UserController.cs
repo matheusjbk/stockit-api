@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockIt.Application.DTOs.User;
 using StockIt.Application.UseCases.User.Register;
-using StockIt.Domain.Shared.Errors;
 
 namespace StockIt.API.Controllers;
 public class UserController : StockItBaseController
 {
     [HttpPost]
     [ProducesResponseType(typeof(RegisteredUserResponse), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(IError), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(IError), StatusCodes.Status409Conflict)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
     public async Task<IActionResult> Register(RegisterUserRequest request, IRegisterUserUseCase useCase)
     {
         var result = await useCase.Execute(request);
