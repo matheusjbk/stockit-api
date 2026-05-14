@@ -13,7 +13,7 @@ public static class ApplicationRegistrations
 
     private static void AddUseCases(IServiceCollection services)
     {
-        services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        services.AddScoped<IRegisterOwnerUseCase, RegisterOwnerUseCase>();
 
         services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
     }

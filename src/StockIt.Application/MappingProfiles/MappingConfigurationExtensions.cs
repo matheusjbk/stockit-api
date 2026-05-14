@@ -5,7 +5,7 @@ namespace StockIt.Application.MappingProfiles;
 
 public static class MappingConfigurationExtensions
 {
-    public static User ToUserEntity(this RegisterUserRequest request) => new() { Name = request.Name,  Email = request.Email };
+    public static User ToUserEntity(this RegisterOwnerRequest request) => new() { Name = request.Name,  Email = request.Email };
 
-    public static RegisteredUserResponse ToRegisteredUserResponse(this User user) => new(user.Name, user.Email);
+    public static RegisteredUserResponse ToRegisteredUserResponse(this User user) => new(user.Name, user.Email, user.CompanyId);
 }

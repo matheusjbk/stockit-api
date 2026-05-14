@@ -7,18 +7,10 @@ using StockIt.Domain.Shared.Errors;
 
 namespace StockIt.Application.UseCases.User.Register;
 
-public class RegisterUserUseCase : IRegisterUserUseCase
+public class RegisterOwnerUseCase(IUserRepository userRepository, IAuthService authService) : IRegisterOwnerUseCase
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IAuthService _authService;
 
-    public RegisterUserUseCase(IUserRepository userRepository, IAuthService authService)
-    {
-        _userRepository = userRepository;
-        _authService = authService;
-    }
-
-    public async Task<Result<RegisteredUserResponse>> Execute(RegisterUserRequest request)
+    public async Task<Result<RegisteredUserResponse>> Execute(RegisterOwnerRequest request)
     {
 
         var validationResult = await Validate(request);
@@ -28,7 +20,13 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         // this line is mapping to user entity for apply business rules that don't yet exist
         var user = request.ToUserEntity();
 
-        var result = await _authService.CreateUserAsync(user, request.Password);
+        // TODO: add migration to create companies table
+        // TODO: create company and save it in database
+        //request.CompanyName;
+        // TODO: add company id in user entity
+        //user.CompanyId = company.Id;
+
+        var result = await authService.CreateUserAsync(user, request.Password);
 
         if (!result.IsSuccess) return Result<RegisteredUserResponse>.Failure(result.Error!);
 
@@ -37,9 +35,9 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         return Result<RegisteredUserResponse>.Success(registeredUserResponse);
     }
 
-    private async Task<Result> Validate(RegisterUserRequest request)
+    private async Task<Result> Validate(RegisterOwnerRequest request)
     {
-        var validationResult = new RegisterUserValidator().Validate(request);
+        var validationResult = new RegisterOwnerValidator().Validate(request);
 
         if(!validationResult.IsValid)
         {
@@ -48,7 +46,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
             return Result.Failure(new ValidationError(errors));
         }
 
-        var emailExistsInDb = await _userRepository.ExistUserWithEmail(request.Email);
+        var emailExistsInDb = await userRepository.ExistUserWithEmail(request.Email);
 
         if (emailExistsInDb) return Result.Failure(new ConflictError(ErrorMessages.EMAIL_ALREADY_REGISTERED));
 

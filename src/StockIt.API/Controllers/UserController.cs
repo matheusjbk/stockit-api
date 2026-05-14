@@ -9,7 +9,7 @@ public class UserController : StockItBaseController
     [ProducesResponseType(typeof(RegisteredUserResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status409Conflict)]
-    public async Task<IActionResult> Register(RegisterUserRequest request, IRegisterUserUseCase useCase)
+    public async Task<IActionResult> Register(RegisterOwnerRequest request, IRegisterOwnerUseCase useCase)
     {
         var result = await useCase.Execute(request);
 

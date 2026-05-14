@@ -3,7 +3,7 @@ using StockIt.Domain.Shared;
 
 namespace StockIt.Application.UseCases.User.Register;
 
-public interface IRegisterUserUseCase
+public interface IRegisterOwnerUseCase
 {
-    public Task<Result<RegisteredUserResponse>> Execute(RegisterUserRequest request);
+    public Task<Result<RegisteredUserResponse>> Execute(RegisterOwnerRequest request);
 }
