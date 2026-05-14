@@ -203,5 +203,14 @@ namespace StockIt.Domain.Shared {
                 return ResourceManager.GetString("UNKNOWN_ERROR", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O usuário não foi encontrado na nossa base de dados.
+        /// </summary>
+        public static string USER_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("USER_NOT_FOUND", resourceCulture);
+            }
+        }
     }
 }

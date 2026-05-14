@@ -165,4 +165,7 @@
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Um erro inesperado aconteceu no nosso sistema. Tente novamente mais tarde</value>
   </data>
+  <data name="USER_NOT_FOUND" xml:space="preserve">
+    <value>O usuário não foi encontrado na nossa base de dados</value>
+  </data>
 </root>
