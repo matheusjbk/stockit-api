@@ -4,10 +4,11 @@ using StockIt.Domain.Repositories;
 using StockIt.Domain.Services;
 using StockIt.Domain.Shared;
 using StockIt.Domain.Shared.Errors;
+using StockIt.Domain.ValueObjects;
 
-namespace StockIt.Application.UseCases.User.Register;
+namespace StockIt.Application.UseCases.User.Register.Owner;
 
-public class RegisterOwnerUseCase(IUserRepository userRepository, IAuthService authService) : IRegisterOwnerUseCase
+public class RegisterOwnerUseCase(IUserRepository userRepository, ICompanyRepository companyRepository, IAuthService authService) : IRegisterOwnerUseCase
 {
 
     public async Task<Result<RegisteredUserResponse>> Execute(RegisterOwnerRequest request)
@@ -19,16 +20,20 @@ public class RegisterOwnerUseCase(IUserRepository userRepository, IAuthService a
 
         // this line is mapping to user entity for apply business rules that don't yet exist
         var user = request.ToUserEntity();
+        user.Role = Role.Owner.Name;
 
         // TODO: add migration to create companies table
-        // TODO: create company and save it in database
-        //request.CompanyName;
-        // TODO: add company id in user entity
-        //user.CompanyId = company.Id;
+        var company = request.ToCompanyEntity();
+        await companyRepository.Add(company);
+        user.CompanyId = company.Id;
 
-        var result = await authService.CreateUserAsync(user, request.Password);
+        var createUserResult = await authService.CreateUserAsync(user, request.Password);
 
-        if (!result.IsSuccess) return Result<RegisteredUserResponse>.Failure(result.Error!);
+        if (!createUserResult.IsSuccess) return Result<RegisteredUserResponse>.Failure(createUserResult.Error!);
+
+        var addUserToRoleResult = await authService.AddToRoleAsync(user, user.Role);
+
+        if (!addUserToRoleResult.IsSuccess) return Result<RegisteredUserResponse>.Failure(addUserToRoleResult.Error!);
 
         var registeredUserResponse = user.ToRegisteredUserResponse();
 

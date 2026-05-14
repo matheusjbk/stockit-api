@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StockIt.Application.DTOs.User;
-using StockIt.Application.UseCases.User.Register;
+using StockIt.Application.UseCases.User.Register.Owner;
 
 namespace StockIt.API.Controllers;
 public class UserController : StockItBaseController

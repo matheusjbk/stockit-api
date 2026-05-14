@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StockIt.Application.UseCases.Auth.Login;
-using StockIt.Application.UseCases.User.Register;
+using StockIt.Application.UseCases.User.Register.Owner;
 
 namespace StockIt.Application.DependencyInjection;
 
