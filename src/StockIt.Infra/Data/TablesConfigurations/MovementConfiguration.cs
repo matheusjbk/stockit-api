@@ -13,6 +13,7 @@ public class MovementConfiguration : EntityBaseConfiguration<Movement>
         base.Configure(entity);
 
         entity.HasOne<Item>().WithMany().HasForeignKey(m => m.ItemId).OnDelete(DeleteBehavior.Cascade);
+        entity.HasOne<Company>().WithMany().HasForeignKey(m => m.CompanyId).OnDelete(DeleteBehavior.Cascade);
         entity.HasOne<ApplicationUser>().WithMany().HasForeignKey(m => m.UserId).OnDelete(DeleteBehavior.Cascade);
 
         entity.Property(m => m.MovementType).HasConversion<string>().HasMaxLength(50).IsRequired();

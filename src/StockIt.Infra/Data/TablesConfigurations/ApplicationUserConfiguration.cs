@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using StockIt.Domain.Entities;
 
 namespace StockIt.Infra.Data.TablesConfigurations;
 
@@ -11,6 +12,8 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
 
         entity.HasKey(user => user.Id);
 
+        entity.HasOne<Company>().WithMany().HasForeignKey(user => user.CompanyId);
+
         entity.Property(user => user.Id).IsRequired().ValueGeneratedNever();
 
         entity.Property(user => user.Name).HasMaxLength(200).IsRequired();
@@ -18,5 +21,6 @@ public class ApplicationUserConfiguration : IEntityTypeConfiguration<Application
         entity.Property(user => user.Email).HasMaxLength(150).IsRequired().HasColumnType("varchar(150)");
 
         entity.Property(user => user.PasswordHash).IsRequired();
+
     }
 }

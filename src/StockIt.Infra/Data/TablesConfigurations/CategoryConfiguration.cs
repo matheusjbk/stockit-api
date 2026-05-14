@@ -12,6 +12,8 @@ public class CategoryConfiguration : EntityBaseConfiguration<Category>
             
         base.Configure(entity);
 
+        entity.HasOne<Company>().WithMany().HasForeignKey(c => c.CompanyId).OnDelete(DeleteBehavior.Cascade);
+
         entity.HasOne<ApplicationUser>().WithMany().HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.Cascade);
     
         entity.Property(c => c.Name).IsRequired().HasMaxLength(100);

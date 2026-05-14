@@ -7,23 +7,18 @@ using StockIt.Infra.Data.TablesConfigurations;
 
 namespace StockIt.Infra.Services;
 
-public class IdentityService : IAuthService
+public class IdentityService(UserManager<ApplicationUser> userManager) : IAuthService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-
-    public IdentityService(UserManager<ApplicationUser> userManager)
-    {
-        _userManager = userManager;
-    }
 
     public async Task<Result> CreateUserAsync(User user, string password)
     {
-        var result = await _userManager.CreateAsync(new ApplicationUser
+        var result = await userManager.CreateAsync(new ApplicationUser
         {
             Id = user.Id,
             Name = user.Name,
             UserName = user.Email,
             Email = user.Email,
+            CompanyId = user.CompanyId,
         }, password);
 
         if (result.Succeeded) return Result.Success();
@@ -35,9 +30,9 @@ public class IdentityService : IAuthService
 
     public async Task<Result> LoginAsync(string email, string password)
     {
-        var user = await _userManager.FindByEmailAsync(email);
+        var user = await userManager.FindByEmailAsync(email);
 
-        if (user is null || await _userManager.CheckPasswordAsync(user, password))
+        if (user is null || await userManager.CheckPasswordAsync(user, password))
             return Result.Failure(new UnauthorizedError(ErrorMessages.INVALID_LOGIN));
 
         return Result.Success();

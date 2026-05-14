@@ -18,7 +18,11 @@ public abstract class JwtHandler
     {
         var claims = new ClaimsIdentity();
 
-        claims.AddClaim(new(ClaimTypes.Sid, user.Email));
+        claims.AddClaims(
+            [
+                new(ClaimTypes.Sid, user.Email),
+                new(ClaimTypes.GroupSid, user.CompanyId.ToString())
+            ]);
 
         return claims;
     }

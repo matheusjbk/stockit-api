@@ -13,6 +13,7 @@ public class ItemConfiguration : EntityBaseConfiguration<Item>
         base.Configure(entity);
 
         entity.HasOne<Category>().WithMany().HasForeignKey(i => i.CategoryId).OnDelete(DeleteBehavior.Cascade);
+        entity.HasOne<Company>().WithMany().HasForeignKey(i => i.CompanyId).OnDelete(DeleteBehavior.Cascade);
         entity.HasOne<ApplicationUser>().WithMany().HasForeignKey(i => i.UserId).OnDelete(DeleteBehavior.Cascade);
 
         entity.Property(i => i.Name).IsRequired().HasMaxLength(100);
