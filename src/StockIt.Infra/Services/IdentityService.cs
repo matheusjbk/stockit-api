@@ -38,6 +38,24 @@ public class IdentityService(UserManager<ApplicationUser> userManager) : IAuthSe
         return Result.Success();
     }
 
+    public async Task<Result> AddToRoleAsync(User user, string role)
+    {
+        var applicationUser = await userManager.FindByEmailAsync(user.Email);
+
+        if(applicationUser is not null)
+        {
+            var result = await userManager.AddToRoleAsync(applicationUser, role.ToLower());
+
+            if (result.Succeeded) return Result.Success();
+
+            var errors = MapIdentityError(result.Errors);
+
+            return Result.Failure(new AggregateError(errors));
+        }
+
+        return Result.Failure(new NotFoundError(ErrorMessages.USER_NOT_FOUND));
+    }
+
     private static IEnumerable<IError> MapIdentityError(IEnumerable<IdentityError> errors)
     {
         foreach(var error in errors)

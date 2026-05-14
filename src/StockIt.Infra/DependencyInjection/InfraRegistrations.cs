@@ -43,6 +43,7 @@ public static class InfraRegistrations
     private static void AddRepositories(IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ICompanyRepository, CompanyRepository>();
     }
 
     private static void AddTokens(IServiceCollection services, IConfiguration configuration)
