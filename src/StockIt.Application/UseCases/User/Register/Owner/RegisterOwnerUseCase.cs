@@ -8,11 +8,12 @@ using StockIt.Domain.ValueObjects;
 
 namespace StockIt.Application.UseCases.User.Register.Owner;
 
-public class RegisterOwnerUseCase(IUserRepository userRepository, ICompanyRepository companyRepository, IAuthService authService) : IRegisterOwnerUseCase
+public class RegisterOwnerUseCase(IUnitOfWork unitOfWork, IAuthService authService) : IRegisterOwnerUseCase
 {
 
     public async Task<Result<RegisteredUserResponse>> Execute(RegisterOwnerRequest request)
     {
+        await unitOfWork.BeginTransactionAsync();
 
         var validationResult = await Validate(request);
 
@@ -22,18 +23,28 @@ public class RegisterOwnerUseCase(IUserRepository userRepository, ICompanyReposi
         var user = request.ToUserEntity();
         user.Role = Role.Owner.Name;
 
-        // TODO: add migration to create companies table
         var company = request.ToCompanyEntity();
-        await companyRepository.Add(company);
+        await unitOfWork.Companies.Add(company);
+
         user.CompanyId = company.Id;
 
         var createUserResult = await authService.CreateUserAsync(user, request.Password);
 
-        if (!createUserResult.IsSuccess) return Result<RegisteredUserResponse>.Failure(createUserResult.Error!);
+        if (!createUserResult.IsSuccess)
+        {
+            await unitOfWork.RollbackAsync();
+            return Result<RegisteredUserResponse>.Failure(createUserResult.Error!);
+        }
 
         var addUserToRoleResult = await authService.AddToRoleAsync(user, user.Role);
 
-        if (!addUserToRoleResult.IsSuccess) return Result<RegisteredUserResponse>.Failure(addUserToRoleResult.Error!);
+        if (!addUserToRoleResult.IsSuccess)
+        {
+            await unitOfWork.RollbackAsync();
+            return Result<RegisteredUserResponse>.Failure(addUserToRoleResult.Error!);
+        }
+
+        await unitOfWork.CommitTransactionAsync();
 
         var registeredUserResponse = user.ToRegisteredUserResponse();
 
@@ -51,7 +62,7 @@ public class RegisterOwnerUseCase(IUserRepository userRepository, ICompanyReposi
             return Result.Failure(new ValidationError(errors));
         }
 
-        var emailExistsInDb = await userRepository.ExistUserWithEmail(request.Email);
+        var emailExistsInDb = await unitOfWork.Users.ExistUserWithEmail(request.Email);
 
         if (emailExistsInDb) return Result.Failure(new ConflictError(ErrorMessages.EMAIL_ALREADY_REGISTERED));
 

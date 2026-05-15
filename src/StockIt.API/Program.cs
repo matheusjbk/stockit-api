@@ -1,8 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using StockIt.Application.DependencyInjection;
+using StockIt.Domain.ValueObjects;
 using StockIt.Infra.Data;
 using StockIt.Infra.DependencyInjection;
+using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +16,22 @@ builder.Services.AddControllers();
 
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
-//builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Settings:Jwt:SecretKey")!)),
+        RoleClaimType = ClaimTypes.Role
+    };
+});
 builder.Services.AddAuthorization();
 
 builder.Services.AddInfra(builder.Configuration);
@@ -36,6 +57,8 @@ app.MapControllers();
 
 MigrateDatabase();
 
+await SeedRoles();
+
 await app.RunAsync();
 
 void MigrateDatabase()
@@ -49,4 +72,21 @@ void MigrateDatabase()
     Console.WriteLine();
     Console.WriteLine("Database migrate successfully");
     Console.WriteLine();
+}
+
+async Task SeedRoles()
+{
+    using var scope = app.Services.CreateScope();
+    var services = scope.ServiceProvider;
+
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+    var roles = Role.GetAll();
+
+    foreach(var role in roles)
+    {
+        var roleExist = await roleManager.RoleExistsAsync(role.Name);
+
+        if (!roleExist) await roleManager.CreateAsync(new IdentityRole<Guid>(role.Name));
+    }
 }
