@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using StockIt.Domain.Entities;
+using StockIt.Domain.Security;
 using System.Security.Claims;
 using System.Text;
 
@@ -14,14 +14,15 @@ public abstract class JwtHandler
         return new SymmetricSecurityKey(bytes);
     }
 
-    protected static ClaimsIdentity GenerateClaims(User user)
+    protected static ClaimsIdentity GenerateClaims(AuthenticatedUser user)
     {
         var claims = new ClaimsIdentity();
 
         claims.AddClaims(
             [
                 new(ClaimTypes.Sid, user.Email),
-                new(ClaimTypes.GroupSid, user.CompanyId.ToString())
+                new(ClaimTypes.GroupSid, user.CompanyId.ToString()),
+                new(ClaimTypes.Role, user.Role)
             ]);
 
         return claims;

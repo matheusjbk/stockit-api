@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using StockIt.Domain.Entities;
+using StockIt.Domain.Security;
 using StockIt.Domain.Security.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
@@ -10,7 +10,7 @@ public class JwtGenerator(uint expirationTimeInMinutes, string secretKey) : JwtH
     private readonly uint _expirationTimeInMinutes = expirationTimeInMinutes;
     private readonly string _secretKey = secretKey;
 
-    public string GenerateToken(User user)
+    public string GenerateToken(AuthenticatedUser user)
     {
         var credentials = new SigningCredentials(GenerateSecurityKey(_secretKey), SecurityAlgorithms.HmacSha256);
 

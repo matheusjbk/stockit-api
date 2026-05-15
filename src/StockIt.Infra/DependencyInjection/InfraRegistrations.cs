@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StockIt.Domain.Repositories;
@@ -32,7 +33,7 @@ public static class InfraRegistrations
 
     private static void AddIdentity(IServiceCollection services)
     {
-        services.AddIdentityCore<ApplicationUser>().AddEntityFrameworkStores<AppDbContext>();
+        services.AddIdentityCore<ApplicationUser>().AddRoles<IdentityRole<Guid>>().AddEntityFrameworkStores<AppDbContext>();
     }
 
     private static void AddAuthService(IServiceCollection services)
@@ -44,6 +45,8 @@ public static class InfraRegistrations
     {
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
     private static void AddTokens(IServiceCollection services, IConfiguration configuration)

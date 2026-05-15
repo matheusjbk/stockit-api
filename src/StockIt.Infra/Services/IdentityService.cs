@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using StockIt.Domain.Entities;
+using StockIt.Domain.Security;
 using StockIt.Domain.Services;
 using StockIt.Domain.Shared;
 using StockIt.Domain.Shared.Errors;
@@ -28,14 +29,19 @@ public class IdentityService(UserManager<ApplicationUser> userManager) : IAuthSe
         return Result.Failure(new AggregateError(errors));
     }
 
-    public async Task<Result> LoginAsync(string email, string password)
+    public async Task<Result<AuthenticatedUser>> LoginAsync(string email, string password)
     {
-        var user = await userManager.FindByEmailAsync(email);
+        var applicationUser = await userManager.FindByEmailAsync(email);
 
-        if (user is null || await userManager.CheckPasswordAsync(user, password))
-            return Result.Failure(new UnauthorizedError(ErrorMessages.INVALID_LOGIN));
+        if (applicationUser is null || !await userManager.CheckPasswordAsync(applicationUser, password))
+            return Result<AuthenticatedUser>.Failure(new UnauthorizedError(ErrorMessages.INVALID_LOGIN));
 
-        return Result.Success();
+        var roles = await userManager.GetRolesAsync(applicationUser);
+        var role = roles.First();
+
+        var authenticatedUser = new AuthenticatedUser(applicationUser.Email!, applicationUser.CompanyId, role);
+
+        return Result<AuthenticatedUser>.Success(authenticatedUser);
     }
 
     public async Task<Result> AddToRoleAsync(User user, string role)
@@ -44,7 +50,7 @@ public class IdentityService(UserManager<ApplicationUser> userManager) : IAuthSe
 
         if(applicationUser is not null)
         {
-            var result = await userManager.AddToRoleAsync(applicationUser, role.ToLower());
+            var result = await userManager.AddToRoleAsync(applicationUser, role);
 
             if (result.Succeeded) return Result.Success();
 
