@@ -1,8 +1,6 @@
-﻿using StockIt.Domain.Entities;
-
-namespace StockIt.Domain.Security.Tokens;
+﻿namespace StockIt.Domain.Security.Tokens;
 
 public interface IAccessTokenGenerator
 {
-    public string GenerateToken(User user);
+    public string GenerateToken(AuthenticatedUser user);
 }
