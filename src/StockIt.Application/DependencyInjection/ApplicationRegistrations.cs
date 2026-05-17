@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using StockIt.Application.UseCases.Auth.Login;
+using StockIt.Application.UseCases.User.Register.Employee;
 using StockIt.Application.UseCases.User.Register.Owner;
 
 namespace StockIt.Application.DependencyInjection;
@@ -14,6 +15,7 @@ public static class ApplicationRegistrations
     private static void AddUseCases(IServiceCollection services)
     {
         services.AddScoped<IRegisterOwnerUseCase, RegisterOwnerUseCase>();
+        services.AddScoped<IRegisterEmployeeUseCase, RegisterEmployeeUseCase>();
 
         services.AddScoped<IDoLoginUseCase, DoLoginUseCase>();
     }

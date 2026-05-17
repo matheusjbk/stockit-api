@@ -1,9 +1,9 @@
 ﻿using StockIt.Application.DTOs.User;
 using StockIt.Domain.Shared;
 
-namespace StockIt.Application.UseCases.User.Register.Owner;
+namespace StockIt.Application.UseCases.User.Register.Employee;
 
-public interface IRegisterOwnerUseCase
+public interface IRegisterEmployeeUseCase
 {
     public Task<Result<RegisteredUserResponse>> Execute(RegisterUserRequest request);
 }
