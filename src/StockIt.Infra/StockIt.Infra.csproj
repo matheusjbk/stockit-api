@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StockIt.Domain\StockIt.Domain.csproj" />
+    <ProjectReference Include="..\StockIt.Application\StockIt.Application.csproj" />
   </ItemGroup>
 
 </Project>

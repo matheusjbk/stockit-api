@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StockIt.Application.Interfaces;
 using StockIt.Domain.Repositories;
 using StockIt.Domain.Security.Tokens;
 using StockIt.Domain.Services;
@@ -22,6 +23,7 @@ public static class InfraRegistrations
         AddAuthService(services);
         AddRepositories(services);
         AddTokens(services, configuration);
+        AddLoggedUser(services);
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -56,4 +58,6 @@ public static class InfraRegistrations
 
         services.AddScoped<IAccessTokenGenerator>(provider => new JwtGenerator(expirationTime, secretKey));
     }
+
+    private static void AddLoggedUser(IServiceCollection services) => services.AddScoped<ILoggedUser, LoggedUser>();
 }

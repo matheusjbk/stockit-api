@@ -61,6 +61,15 @@ namespace StockIt.Domain.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Você não pode definir um nome para a empresa.
+        /// </summary>
+        public static string COMPANY_NAME_NOT_ALLOWED {
+            get {
+                return ResourceManager.GetString("COMPANY_NAME_NOT_ALLOWED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E-mail já registrado.
         /// </summary>
         public static string EMAIL_ALREADY_REGISTERED {
