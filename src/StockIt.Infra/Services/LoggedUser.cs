@@ -6,11 +6,11 @@ namespace StockIt.Infra.Services;
 
 internal class LoggedUser(IHttpContextAccessor contextAccessor) : ILoggedUser
 {
-    public Guid GetUserEmail()
+    public string GetUserEmail()
     {
-        var userId = contextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Sid);
+        var userEmail = contextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Sid);
 
-        return userId != null ? Guid.Parse(userId) : Guid.Empty;
+        return userEmail ?? string.Empty;
     }
 
     public Guid GetCompanyId()

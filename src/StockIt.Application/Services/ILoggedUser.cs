@@ -2,6 +2,6 @@
 
 public interface ILoggedUser
 {
-    Guid GetUserEmail();
+    string GetUserEmail();
     Guid GetCompanyId();
 }
