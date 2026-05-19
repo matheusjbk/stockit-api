@@ -11,7 +11,7 @@ public class UserRepository(AppDbContext context) : IUserRepository
 
     public async Task<User?> GetUserByEmail(string email)
     {
-        var applicationUser = await context.Users.FirstOrDefaultAsync(user => user.Email!.Equals(email));
+        var applicationUser = await context.Users.AsNoTracking().FirstOrDefaultAsync(user => user.Email!.Equals(email));
 
         if (applicationUser is not null) return new User
         {

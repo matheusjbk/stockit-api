@@ -79,6 +79,15 @@ namespace StockIt.Domain.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O nome da categoria não pode estar vazio.
+        /// </summary>
+        public static string EMPTY_CATEGORY_NAME {
+            get {
+                return ResourceManager.GetString("EMPTY_CATEGORY_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O nome da empresa não pode estar vazio.
         /// </summary>
         public static string EMPTY_COMPANY_NAME {
@@ -174,6 +183,15 @@ namespace StockIt.Domain.Shared {
         public static string PROBLEM_DETAILS_TITLE {
             get {
                 return ResourceManager.GetString("PROBLEM_DETAILS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O nome da categoria precisa ter ao menos 2 caracteres.
+        /// </summary>
+        public static string SHORT_CATEGORY_NAME {
+            get {
+                return ResourceManager.GetString("SHORT_CATEGORY_NAME", resourceCulture);
             }
         }
         

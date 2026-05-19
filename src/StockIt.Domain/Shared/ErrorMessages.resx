@@ -123,6 +123,9 @@
   <data name="EMAIL_ALREADY_REGISTERED" xml:space="preserve">
     <value>E-mail já registrado</value>
   </data>
+  <data name="EMPTY_CATEGORY_NAME" xml:space="preserve">
+    <value>O nome da categoria não pode estar vazio</value>
+  </data>
   <data name="EMPTY_COMPANY_NAME" xml:space="preserve">
     <value>O nome da empresa não pode estar vazio</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="PROBLEM_DETAILS_TITLE" xml:space="preserve">
     <value>Ocorreu um erro ao processar sua requisição</value>
+  </data>
+  <data name="SHORT_CATEGORY_NAME" xml:space="preserve">
+    <value>O nome da categoria precisa ter ao menos 2 caracteres</value>
   </data>
   <data name="SHORT_COMPANY_NAME" xml:space="preserve">
     <value>O nome da empresa precisa ter ao menos 2 caracteres</value>

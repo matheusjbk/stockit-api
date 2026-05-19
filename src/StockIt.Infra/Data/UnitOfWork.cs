@@ -8,11 +8,14 @@ public class UnitOfWork(AppDbContext context) : IUnitOfWork
 {
     private IUserRepository? _userRepository;
     private ICompanyRepository? _companyRepository;
+    private ICategoryRepository? _categoryRepository;
     private IDbContextTransaction? _transaction;
 
     public IUserRepository Users => _userRepository ??= new UserRepository(context);
 
     public ICompanyRepository Companies => _companyRepository ??= new CompanyRepository(context);
+
+    public ICategoryRepository Categories => _categoryRepository ??= new CategoryRepository(context);
 
     public async Task BeginTransactionAsync()
     {
