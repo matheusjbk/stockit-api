@@ -4,4 +4,5 @@ public interface ILoggedUser
 {
     string GetUserEmail();
     Guid GetCompanyId();
+    string GetUserRole();
 }

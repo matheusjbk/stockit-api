@@ -19,4 +19,11 @@ internal class LoggedUser(IHttpContextAccessor contextAccessor) : ILoggedUser
 
         return companyId != null ? Guid.Parse(companyId) : Guid.Empty;
     }
+
+    public string GetUserRole()
+    {
+        var userRole = contextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
+
+        return userRole ?? string.Empty;
+    }
 }
