@@ -1,8 +1,8 @@
-﻿using StockIt.Domain.Entities;
-using StockIt.Domain.Security;
+﻿using StockIt.Application.Security;
+using StockIt.Domain.Entities;
 using StockIt.Domain.Shared;
 
-namespace StockIt.Domain.Services;
+namespace StockIt.Application.Services;
 
 public interface IAuthService
 {

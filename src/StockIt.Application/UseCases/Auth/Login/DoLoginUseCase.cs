@@ -1,6 +1,6 @@
 ﻿using StockIt.Application.DTOs.Login;
-using StockIt.Domain.Security.Tokens;
-using StockIt.Domain.Services;
+using StockIt.Application.Security.Tokens;
+using StockIt.Application.Services;
 using StockIt.Domain.Shared;
 
 namespace StockIt.Application.UseCases.Auth.Login;

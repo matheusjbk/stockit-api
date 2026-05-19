@@ -2,10 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using StockIt.Application.Interfaces;
+using StockIt.Application.Security.Tokens;
+using StockIt.Application.Services;
 using StockIt.Domain.Repositories;
-using StockIt.Domain.Security.Tokens;
-using StockIt.Domain.Services;
 using StockIt.Infra.Data;
 using StockIt.Infra.Data.Repositories;
 using StockIt.Infra.Data.TablesConfigurations;

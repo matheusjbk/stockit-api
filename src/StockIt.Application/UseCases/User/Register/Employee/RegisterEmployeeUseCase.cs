@@ -1,8 +1,7 @@
 ﻿using StockIt.Application.DTOs.User;
-using StockIt.Application.Interfaces;
 using StockIt.Application.MappingProfiles;
+using StockIt.Application.Services;
 using StockIt.Domain.Repositories;
-using StockIt.Domain.Services;
 using StockIt.Domain.Shared;
 using StockIt.Domain.Shared.Errors;
 using StockIt.Domain.ValueObjects;

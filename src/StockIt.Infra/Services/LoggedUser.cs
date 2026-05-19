@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using StockIt.Application.Interfaces;
+using StockIt.Application.Services;
 using System.Security.Claims;
 
 namespace StockIt.Infra.Services;

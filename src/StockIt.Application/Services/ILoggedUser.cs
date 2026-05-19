@@ -1,4 +1,4 @@
-﻿namespace StockIt.Application.Interfaces;
+﻿namespace StockIt.Application.Services;
 
 public interface ILoggedUser
 {

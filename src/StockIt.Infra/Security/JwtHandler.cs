@@ -1,5 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using StockIt.Domain.Security;
+using StockIt.Application.Security;
 using System.Security.Claims;
 using System.Text;
 

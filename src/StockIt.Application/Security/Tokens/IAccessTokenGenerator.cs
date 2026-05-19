@@ -1,4 +1,4 @@
-﻿namespace StockIt.Domain.Security.Tokens;
+﻿namespace StockIt.Application.Security.Tokens;
 
 public interface IAccessTokenGenerator
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using StockIt.Application.Security;
+using StockIt.Application.Services;
 using StockIt.Domain.Entities;
-using StockIt.Domain.Security;
-using StockIt.Domain.Services;
 using StockIt.Domain.Shared;
 using StockIt.Domain.Shared.Errors;
 using StockIt.Infra.Data.TablesConfigurations;

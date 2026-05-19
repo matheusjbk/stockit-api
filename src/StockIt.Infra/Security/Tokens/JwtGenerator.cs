@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using StockIt.Domain.Security;
-using StockIt.Domain.Security.Tokens;
+using StockIt.Application.Security;
+using StockIt.Application.Security.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace StockIt.Infra.Security.Tokens;
