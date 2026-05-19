@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StockIt.Application.DTOs.User;
+using StockIt.Application.UseCases.User.Profile;
 using StockIt.Application.UseCases.User.Register.Employee;
 using StockIt.Application.UseCases.User.Register.Owner;
 
@@ -28,5 +29,15 @@ public class UserController : StockItBaseController
         var result = await useCase.Execute(request);
 
         return HandleCreated(result);
+    }
+
+    [Authorize]
+    [HttpGet]
+    [ProducesResponseType(typeof(UserProfileResponse), StatusCodes.Status200OK)]
+    public async Task<IActionResult> Profile(IGetUserProfileUseCase useCase)
+    {
+        var result = await useCase.Execute();
+
+        return HandleResult(result);
     }
 }
